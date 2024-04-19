@@ -1,9 +1,9 @@
 import java.util.*;
 
-class BreadthFirstSearch_Using_QUEUE {
+class BreadthFirstSearch_Using_Recursion {
     private HashMap<Integer, List<Integer>> graph;
 
-    public BreadthFirstSearch_Using_QUEUE() {
+    public BreadthFirstSearch_Using_Recursion() {
         this.graph = new HashMap<>();
     }
 
@@ -21,24 +21,32 @@ class BreadthFirstSearch_Using_QUEUE {
         queue.add(start);
         visited.add(start);
 
-        while (!queue.isEmpty()) {
-            int vertex = queue.poll();
-            System.out.println(vertex + " ");
+        bfsRecursive(queue, visited);
+    }
 
-            List<Integer> neighbors = graph.get(vertex);
-            if (neighbors != null) {
-                for (int neighbor : neighbors) {
-                    if (!visited.contains(neighbor)) {
-                        queue.add(neighbor);
-                        visited.add(neighbor);
-                    }
+    private void bfsRecursive(Queue<Integer> queue, Set<Integer> visited) {
+        if (queue.isEmpty()) {
+            return;
+        }
+
+        int vertex = queue.poll();
+        System.out.println(vertex + " ");
+
+        List<Integer> neighbors = graph.get(vertex);
+        if (neighbors != null) {
+            for (int neighbor : neighbors) {
+                if (!visited.contains(neighbor)) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
                 }
             }
         }
+
+        bfsRecursive(queue, visited);
     }
 
     public static void main(String[] args) {
-        BreadthFirstSearch_Using_QUEUE bfs = new BreadthFirstSearch_Using_QUEUE();
+        BreadthFirstSearch_Using_Recursion bfs = new BreadthFirstSearch_Using_Recursion();
         bfs.addEdge(0, 1);
         bfs.addEdge(0, 2);
         bfs.addEdge(1, 2);
